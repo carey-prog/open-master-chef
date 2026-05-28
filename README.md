@@ -1,5 +1,5 @@
 <<<<<<< HEAD
-# 一饭封神 - AI 智能菜谱生成 Agent
+今日吃啥- AI 智能菜谱生成 Agent
 
 基于 **Spring Boot + Spring AI Alibaba Graph + Thymeleaf + MySQL + Redis Stack** 的单体应用。
 
