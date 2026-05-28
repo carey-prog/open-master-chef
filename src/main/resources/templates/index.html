@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>主页 · 今日吃啥</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <link rel="stylesheet" th:href="@{/css/modules.css}">
+</head>
+<body class="module-page">
+<div class="page module-container">
+    <header th:replace="~{fragments/layout :: site-header(${activeNav})}"></header>
+
+    <div class="home-intro">
+        <p class="hint">🍳 智能菜谱生成 · 选食材 → 选菜系 → AI 创作</p>
+    </div>
+
+    <section class="card step-card">
+        <div class="step-tab pink"><span class="step-num">1</span> 备料 · 挑选食材</div>
+        <div class="card-body">
+            <div class="section-icon">🥬</div>
+            <h2>今天冰箱里有什么？</h2>
+            <p class="hint">输入或点选现有食材，AI 帮你搭配成菜</p>
+            <p class="sub-hint">支持蔬菜、肉类、海鲜、调料等，最多 10 种</p>
+
+            <div class="selected-tags" id="selectedTags"></div>
+
+            <div class="input-row">
+                <input type="text" id="ingredientInput" placeholder="例如：番茄、鸡蛋、豆腐…" maxlength="20">
+                <label class="camera-btn" title="拍照识食材">
+                    📷
+                    <input type="file" id="cameraInput" accept="image/*" capture="environment" hidden>
+                </label>
+            </div>
+
+            <details class="quick-select" open>
+                <summary>⚡ 快捷选料</summary>
+                <div class="quick-content">
+                    <div th:each="cat : ${categories}" class="category-block">
+                        <div class="category-title" th:text="${cat.emoji + ' ' + cat.name}">分类</div>
+                        <div class="tag-grid">
+                            <button type="button" class="tag-btn"
+                                    th:each="item : ${cat.ingredients}"
+                                    th:data-name="${item.name}"
+                                    th:text="${item.name}">食材</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="quick-footer">
+                    <span>点击即可快速添加</span>
+                    <span id="selectedCount">已选 0/10</span>
+                </div>
+            </details>
+        </div>
+    </section>
+
+    <section class="card step-card">
+        <div class="step-tab green"><span class="step-num">2</span> 选风格 · 定菜系</div>
+        <div class="card-body">
+            <h3>🇨🇳 中华八大菜系</h3>
+            <div class="cuisine-grid" id="chineseCuisines">
+                <button type="button" class="cuisine-btn"
+                        th:each="c : ${chineseCuisines}"
+                        th:data-code="${c.code}"
+                        th:text="${c.emoji + ' ' + c.name}">菜系</button>
+            </div>
+            <h3>🌍 环球风味</h3>
+            <div class="cuisine-grid" id="internationalCuisines">
+                <button type="button" class="cuisine-btn"
+                        th:each="c : ${internationalCuisines}"
+                        th:data-code="${c.code}"
+                        th:text="${c.emoji + ' ' + c.name}">菜系</button>
+            </div>
+            <div class="custom-input">
+                <span>✏️</span>
+                <input type="text" id="customRequire" placeholder="特殊要求：少油少盐、快手菜、儿童友好…">
+            </div>
+        </div>
+    </section>
+
+    <section class="card step-card">
+        <div class="step-tab orange"><span class="step-num">3</span> 启灶 · AI 创作</div>
+        <div class="card-body">
+            <h2>一切就绪，开火！</h2>
+            <p class="hint">AI 将检索知识库、搜索最新做法，为你生成完整菜谱</p>
+            <div class="config-box">
+                <div class="config-title">当前方案</div>
+                <div id="configIngredients">🥗 食材：尚未添加</div>
+                <div id="configCuisine">👨‍🍳 菜系：尚未选择</div>
+            </div>
+            <button type="button" class="primary-btn" id="generateBtn" disabled>
+                🔥 开始生成菜谱
+            </button>
+            <p class="sub-hint center">预计 1～3 分钟 · RAG 检索 → 联网搜索 → 生成 → 营养分析</p>
+        </div>
+    </section>
+
+    <section class="card step-card">
+        <div class="step-tab blue"><span class="step-num">4</span> 开饭 · 美味呈现</div>
+        <div class="card-body result-area" id="resultArea">
+            <div class="empty-result">
+                <div class="star-box">🍽️</div>
+                <p>你的专属菜谱将在这里呈现</p>
+                <p class="sub-hint">选好食材和菜系，点击「开始生成菜谱」</p>
+            </div>
+        </div>
+    </section>
+
+    <footer th:replace="~{fragments/layout :: site-footer}"></footer>
+</div>
+
+<div class="loading-overlay" id="loadingOverlay" hidden>
+    <div class="loading-box">
+        <div class="spinner"></div>
+        <p id="loadingText">AI 厨神正在创作…</p>
+        <p class="sub-hint" id="loadingSubText">正在为你定制最佳方案</p>
+        <p class="sub-hint" id="loadingHint">请稍候，美味即将出炉</p>
+        <div class="loading-steps">
+            <span class="loading-step-tag">RAG</span>
+            <span class="loading-step-tag">联网</span>
+            <span class="loading-step-tag">生成</span>
+            <span class="loading-step-tag">营养</span>
+            <span class="loading-step-tag">配图</span>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/js/app.js}"></script>
+</body>
+</html>

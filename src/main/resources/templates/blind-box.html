@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('美食盲盒 · 今日吃啥')}"></head>
+<body class="module-page">
+<div class="page module-container">
+    <header th:replace="~{fragments/layout :: site-header(${activeNav})}"></header>
+
+    <!-- 初始：随机选择 -->
+    <section class="card module-card" id="blindStartPanel">
+        <div class="card-body blind-start">
+            <div class="dice-icon">🎲</div>
+            <h2>准备好了吗？</h2>
+            <button type="button" class="primary-btn blind-start-btn" id="startRandomBtn">🎲 开始随机选择</button>
+
+            <details class="pref-panel" open>
+                <summary>偏好设置</summary>
+                <div class="pref-grid">
+                    <button type="button" class="pref-btn active" data-pref="meat_heavy">🍖 荤菜多</button>
+                    <button type="button" class="pref-btn" data-pref="veg_heavy">🥬 素菜多</button>
+                    <button type="button" class="pref-btn" data-pref="vegan">🌱 纯素</button>
+                    <button type="button" class="pref-btn" data-pref="all_meat">🥩 纯荤</button>
+                </div>
+            </details>
+
+            <blockquote class="quote-box">
+                给粤菜大师一根白萝卜，他能还你一桌国宴级开水白菜…而我只会凉拌 🥬
+            </blockquote>
+        </div>
+    </section>
+
+    <!-- 结果：今日推荐 -->
+    <section class="card module-card" id="blindResultPanel" hidden>
+        <div class="card-body">
+            <h2 class="result-title">🎉 今日推荐</h2>
+            <div class="blind-result-grid">
+                <div class="result-block">
+                    <h3>🥗 推荐菜品 (<span id="ingredientCount">6</span>道)</h3>
+                    <div class="ingredient-result-grid" id="ingredientResultGrid"></div>
+                </div>
+                <div class="result-block chef-block">
+                    <h3>👨‍🍳 推荐主厨</h3>
+                    <div class="chef-card" id="chefCard">
+                        <div class="chef-emoji" id="chefEmoji">🌮</div>
+                        <div class="chef-name" id="chefName">料理大师</div>
+                        <div class="chef-desc" id="chefDesc">...</div>
+                    </div>
+                </div>
+            </div>
+            <div class="action-row">
+                <button type="button" class="primary-btn gradient-btn" id="generateRecipeBtn">✨ 生成菜谱</button>
+                <button type="button" class="secondary-btn" id="reselectBtn">🎲 重新选择</button>
+            </div>
+        </div>
+    </section>
+
+    <div class="result-area" id="recipeResultArea"></div>
+
+    <footer th:replace="~{fragments/layout :: site-footer}"></footer>
+</div>
+
+<div class="loading-overlay" id="loadingOverlay" hidden>
+    <div class="loading-box">
+        <div class="spinner"></div>
+        <p id="loadingText">AI 厨神正在创作…</p>
+    </div>
+</div>
+
+<script th:src="@{/js/blind-box.js}"></script>
+</body>
+</html>

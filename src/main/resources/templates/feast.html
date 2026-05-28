@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head('满汉全席 · 一桌好菜师')}"></head>
+<body class="module-page feast-page">
+<div class="page module-container feast-layout">
+    <header th:replace="~{fragments/layout :: site-header(${activeNav})}"></header>
+
+    <div class="feast-brand">
+        <h2>一桌好菜师</h2>
+        <p>让每顿饭，都有剧本！</p>
+    </div>
+
+    <div class="feast-grid">
+        <!-- 1. 菜品配置 -->
+        <section class="card module-card">
+            <div class="step-tab pink"><span class="step-num">1</span> 菜品配置</div>
+            <div class="card-body">
+                <h3>选择生成模式</h3>
+                <div class="mode-grid">
+                    <button type="button" class="mode-btn active" data-mode="fixed">
+                        <strong>🎯 固定数量模式</strong>
+                        <span>指定确切菜品数量</span>
+                    </button>
+                    <button type="button" class="mode-btn" data-mode="smart">
+                        <strong>✨ 智能搭配模式</strong>
+                        <span>AI 智能决定数量和搭配</span>
+                    </button>
+                </div>
+
+                <div id="fixedCountPanel">
+                    <h3>菜品数量</h3>
+                    <div class="count-grid">
+                        <button type="button" class="count-btn" data-count="2">2道</button>
+                        <button type="button" class="count-btn" data-count="4">4道</button>
+                        <button type="button" class="count-btn active" data-count="6">6道</button>
+                        <button type="button" class="count-btn" data-count="8">8道</button>
+                    </div>
+                    <div class="custom-count">
+                        自定义 <input type="number" id="customCount" min="2" max="12" value="6"> 道
+                    </div>
+                </div>
+
+                <div id="smartDishPanel" hidden>
+                    <div class="warn-box">⚠️ 智能搭配模式需要您先输入至少一道菜品</div>
+                    <div class="input-row">
+                        <input type="text" id="smartDishInput" placeholder="输入菜品名称，按回车添加…" maxlength="20">
+                        <button type="button" class="mini-btn" id="addSmartDishBtn">添加</button>
+                    </div>
+                    <p class="sub-hint">例如：包菜、娃娃菜、土豆</p>
+                    <div class="selected-tags" id="smartDishTags"></div>
+                    <p class="sub-hint right" id="smartDishCount">0/10</p>
+                </div>
+
+                <div id="fixedDishPanel">
+                    <h3>指定菜品（可选）</h3>
+                    <div class="input-row">
+                        <input type="text" id="fixedDishInput" placeholder="输入菜品名称，按回车添加…" maxlength="20">
+                        <button type="button" class="mini-btn" id="addFixedDishBtn">添加</button>
+                    </div>
+                    <div class="selected-tags" id="fixedDishTags"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. 偏好设置 -->
+        <section class="card module-card">
+            <div class="step-tab blue"><span class="step-num">2</span> 偏好设置（可选）</div>
+            <div class="card-body">
+                <div class="info-box">可选配置：以下设置为可选项，不设置也能生成精彩菜单。</div>
+
+                <details open>
+                    <summary>🍜 口味和风格设置</summary>
+                    <p class="field-label">口味偏好</p>
+                    <div class="tag-select" id="tastePrefs">
+                        <button type="button" class="tag-select-btn" data-value="麻辣">麻辣</button>
+                        <button type="button" class="tag-select-btn" data-value="甜味">甜味</button>
+                        <button type="button" class="tag-select-btn" data-value="酸味">酸味</button>
+                        <button type="button" class="tag-select-btn" data-value="咸鲜">咸鲜</button>
+                        <button type="button" class="tag-select-btn" data-value="清淡">清淡</button>
+                        <button type="button" class="tag-select-btn" data-value="浓郁">浓郁</button>
+                    </div>
+                    <p class="field-label">菜系风格</p>
+                    <div class="tag-select single" id="cuisineStyle">
+                        <button type="button" class="tag-select-btn active" data-value="混合菜系">混合菜系</button>
+                        <button type="button" class="tag-select-btn" data-value="中式为主">中式为主</button>
+                        <button type="button" class="tag-select-btn" data-value="西式为主">西式为主</button>
+                        <button type="button" class="tag-select-btn" data-value="日式为主">日式为主</button>
+                    </div>
+                    <p class="field-label">用餐场景</p>
+                    <div class="tag-select single" id="diningScene">
+                        <button type="button" class="tag-select-btn active" data-value="家庭聚餐">家庭聚餐</button>
+                        <button type="button" class="tag-select-btn" data-value="朋友聚会">朋友聚会</button>
+                        <button type="button" class="tag-select-btn" data-value="浪漫晚餐">浪漫晚餐</button>
+                        <button type="button" class="tag-select-btn" data-value="商务宴请">商务宴请</button>
+                        <button type="button" class="tag-select-btn" data-value="节日庆祝">节日庆祝</button>
+                        <button type="button" class="tag-select-btn" data-value="日常用餐">日常用餐</button>
+                    </div>
+                </details>
+
+                <details open>
+                    <summary>🍎 营养和特殊要求</summary>
+                    <p class="field-label">营养搭配</p>
+                    <div class="tag-select single" id="nutritionPref">
+                        <button type="button" class="tag-select-btn active" data-value="营养均衡">营养均衡</button>
+                        <button type="button" class="tag-select-btn" data-value="高蛋白">高蛋白</button>
+                        <button type="button" class="tag-select-btn" data-value="素食为主">素食为主</button>
+                        <button type="button" class="tag-select-btn" data-value="低脂健康">低脂健康</button>
+                        <button type="button" class="tag-select-btn" data-value="滋补养生">滋补养生</button>
+                    </div>
+                    <p class="field-label">特殊要求</p>
+                    <textarea id="specialRequire" maxlength="200" placeholder="例如：不要太油腻，适合老人小孩，有一道汤…"></textarea>
+                    <p class="sub-hint right"><span id="specialCount">0</span>/200</p>
+                </details>
+
+                <div class="config-box">
+                    <div class="config-title">当前配置</div>
+                    <div id="feastConfigSummary">生成模式：固定数量 · 菜品数量：6 道</div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- 3. 生成 -->
+    <section class="card module-card feast-action-card">
+        <div class="step-tab orange"><span class="step-num">3</span> 生成一桌菜</div>
+        <div class="card-body center-body">
+            <div class="section-icon">👨‍🍳</div>
+            <h2>准备生成一桌菜</h2>
+            <p class="hint">AI 大师已准备就绪，点击按钮开始设计您的专属菜单</p>
+            <button type="button" class="primary-btn" id="generateFeastBtn">✨ 交给大师</button>
+            <p class="warn-box inline-warn" id="feastWarn" hidden>⚠️ 请先在步骤 1 中输入至少一道菜品</p>
+        </div>
+    </section>
+
+    <section class="card module-card" id="feastResultPanel" hidden>
+        <div class="card-body" id="feastResultBody"></div>
+    </section>
+
+    <footer th:replace="~{fragments/layout :: site-footer}"></footer>
+</div>
+
+<div class="loading-overlay" id="loadingOverlay" hidden>
+    <div class="loading-box">
+        <div class="spinner"></div>
+        <p id="loadingText">AI 正在设计菜单…</p>
+    </div>
+</div>
+
+<script th:src="@{/js/feast.js}"></script>
+</body>
+</html>

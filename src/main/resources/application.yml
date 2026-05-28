@@ -1,0 +1,98 @@
+# =============================================================================
+# 「一饭封神」应用配置文件
+# 敏感配置：复制 application-local.yml.example 为 application-local.yml 并填写 Key
+# 或通过环境变量覆盖（见各 ${ENV:default} 占位符）
+# =============================================================================
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: masterchef
+
+  thymeleaf:
+    cache: false
+    prefix: classpath:/templates/
+    suffix: .html
+
+  servlet:
+    multipart:
+      max-file-size: 10MB
+      max-request-size: 10MB
+
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/appdb?useUnicode=true&characterEncoding=utf8&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: ${MYSQL_PASSWORD:your-mysql-password}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  data:
+    redis:
+      host: 127.0.0.1
+      port: 6379
+      # RAG 向量库需 Redis Stack：docker run -d -p 6379:6379 redis/redis-stack-server
+      timeout: 10s
+
+  ai:
+    model:
+      chat: none
+      embedding: dashscope
+      audio:
+        speech: none
+        transcription: none
+      image: none
+      moderation: none
+
+    dashscope:
+      api-key: ${DASHSCOPE_API_KEY:your-dashscope-key}
+      chat:
+        options:
+          model: qwen-plus
+      embedding:
+        options:
+          model: text-embedding-v3
+
+    vectorstore:
+      redis:
+        initialize-schema: true
+        index-name: master-chef-rag
+        prefix: "rag:"
+
+zhipu:
+  api-key: ${ZHIPU_API_KEY:your-id.your-secret}
+  base-url: https://open.bigmodel.cn/api/paas/v4/
+
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  global-config:
+    db-config:
+      id-type: auto
+
+masterchef:
+  deepseek:
+    api-key: ${DEEPSEEK_API_KEY:your-deepseek-key}
+    base-url: https://api.deepseek.com
+    model: deepseek-chat
+    temperature: 0.7
+
+  mimo:
+    api-key: ${MIMO_API_KEY:your-mimo-api-key}
+    base-url: https://api.xiaomimimo.com/v1
+    vision-model: mimo-v2-omni
+    image-model: mimo-v2-omni
+
+  agent:
+    state-ttl-hours: 24
+    session-prefix: "agent:session:"
+  dashscope:
+    image-model: wanx2.1-t2i-turbo
+  images:
+    storage-dir: ./data/images
+
+logging:
+  level:
+    org.carey.masterchef: INFO
+    com.alibaba.cloud.ai: INFO

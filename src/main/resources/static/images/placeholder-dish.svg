@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="480" viewBox="0 0 800 480">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff9f3"/>
+      <stop offset="100%" stop-color="#fff0eb"/>
+    </linearGradient>
+    <linearGradient id="food" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#ffb74d"/>
+      <stop offset="100%" stop-color="#e85d3a"/>
+    </linearGradient>
+    <radialGradient id="plateShine" cx="35%" cy="30%" r="65%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95"/>
+      <stop offset="100%" stop-color="#f5f5f5" stop-opacity="1"/>
+    </radialGradient>
+  </defs>
+  <rect width="800" height="480" fill="url(#bg)"/>
+  <!-- plate shadow -->
+  <ellipse cx="400" cy="310" rx="200" ry="28" fill="#000" opacity="0.06"/>
+  <!-- plate -->
+  <ellipse cx="400" cy="280" rx="210" ry="78" fill="url(#plateShine)" stroke="#e0d5c8" stroke-width="3"/>
+  <ellipse cx="400" cy="268" rx="145" ry="52" fill="url(#food)"/>
+  <!-- steam -->
+  <path d="M360 180 Q350 150 365 130 Q380 150 370 180" fill="none" stroke="#ccc" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+  <path d="M400 170 Q390 135 405 110 Q420 135 410 170" fill="none" stroke="#ccc" stroke-width="4" stroke-linecap="round" opacity="0.7"/>
+  <path d="M440 180 Q430 150 445 130 Q460 150 450 180" fill="none" stroke="#ccc" stroke-width="4" stroke-linecap="round" opacity="0.6"/>
+  <!-- garnish dots -->
+  <circle cx="350" cy="255" r="6" fill="#4caf50"/>
+  <circle cx="450" cy="262" r="5" fill="#ff5722"/>
+  <circle cx="420" cy="248" r="4" fill="#ffc107"/>
+</svg>

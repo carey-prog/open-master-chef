@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title th:text="${title}">今日吃啥</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <link rel="stylesheet" th:href="@{/css/modules.css}">
+</head>
+<body>
+
+<header class="site-header" th:fragment="site-header(activeNav)">
+    <div class="site-brand">
+        <div class="logo-box">饭</div>
+        <div class="header-text">
+            <h1>今日吃啥</h1>
+            <p class="tagline">盲盒美食：「绝了！」 or 「寄了！」</p>
+        </div>
+    </div>
+    <nav class="site-nav">
+        <a th:href="@{/}" th:classappend="${activeNav == 'home'} ? ' active' : ''">🏠 主页</a>
+        <a th:href="@{/blind-box}" th:classappend="${activeNav == 'blind-box'} ? ' active' : ''">🎁 美食盲盒</a>
+        <a th:href="@{/feast}" th:classappend="${activeNav == 'feast'} ? ' active' : ''">🍽️ 满汉全席</a>
+    </nav>
+</header>
+
+<footer class="page-footer site-footer" th:fragment="site-footer">
+    <span>© 2026 今日吃啥</span>
+    <span class="footer-dot">·</span>
+    <span>Powered by DeepSeek + LangGraph</span>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,20 @@
+# 复制为项目根目录 application-local.yml 并填写真实配置（已被 .gitignore 忽略）
+# 启动：mvn spring-boot:run -Dspring-boot.run.profiles=local
+
+spring:
+  datasource:
+    password: your-mysql-password
+
+  ai:
+    dashscope:
+      api-key: your-dashscope-key
+
+zhipu:
+  api-key: your-id.your-secret
+
+masterchef:
+  deepseek:
+    api-key: your-deepseek-key
+  mimo:
+    api-key: your-mimo-api-key
+    base-url: https://api.xiaomimimo.com/v1

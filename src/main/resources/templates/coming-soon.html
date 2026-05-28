@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{fragments/layout :: head(${moduleTitle} + ' · 今日吃啥')}"></head>
+<body class="module-page">
+<div class="page module-container">
+    <header th:replace="~{fragments/layout :: site-header(${activeNav})}"></header>
+
+    <section class="card module-card coming-soon-card">
+        <div class="card-body center-body">
+            <div class="star-box">🚧</div>
+            <h2 th:text="${moduleTitle}">模块</h2>
+            <p class="hint" th:text="${moduleDesc}">敬请期待</p>
+            <a th:href="@{/}" class="detail-link">← 返回主页</a>
+        </div>
+    </section>
+
+    <footer th:replace="~{fragments/layout :: site-footer}"></footer>
+</div>
+</body>
+</html>
