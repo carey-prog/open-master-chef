@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 一饭封神 - AI 智能菜谱生成 Agent
 
 基于 **Spring Boot + Spring AI Alibaba Graph + Thymeleaf + MySQL + Redis Stack** 的单体应用。
@@ -93,3 +94,6 @@ src/main/java/org/carey/masterchef/
 ## Python 版本
 
 同仓库作者的 **cookieMaster** 项目为 LangChain + LangGraph Python 复刻版（默认端口 8081）。
+=======
+# open-master-chef
+>>>>>>> 0d2bd4e22221f27eb4b278363652a5b7fd440318
